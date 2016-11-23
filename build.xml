@@ -1,4 +1,4 @@
-<project name="My Project" default="help" basedir=".">
+<project name="Hello World Web" default="help" basedir=".">
   <!-- Define the properties used by the build -->
   <property name="app.name"      value="hello"/>
   <property name="tomcat.home"   value="/usr/share/tomcat"/>
