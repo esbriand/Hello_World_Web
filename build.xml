@@ -4,6 +4,7 @@
   <property name="tomcat.home"   value="/usr/share/tomcat"/>
   <property name="work.home"     value="${basedir}/work"/>
   <property name="dist.home"     value="${basedir}/dist"/>
+  <property name="cont.home"     value="${basedir}/container"/>
   <property name="src.home"      value="${basedir}/src"/>
   <property name="web.home"      value="${basedir}/web"/>
 
@@ -63,7 +64,6 @@
     <copy  todir="${work.home}/WEB-INF/classes">
       <fileset dir="${src.home}" excludes="**/*.java"/>
     </copy>
-
   </target>
 
 
@@ -71,6 +71,9 @@
           description="Create WAR file for binary distribution">
     <jar jarfile="${dist.home}/${app.name}.war"
          basedir="${work.home}"/>
+    <copy  todir="${dist.home}">
+      <fileset dir="${cont.home}"/>
+    </copy>
   </target>
 
 </project>
