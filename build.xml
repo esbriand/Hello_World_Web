@@ -7,6 +7,8 @@
   <property name="cont.home"     value="${basedir}/container"/>
   <property name="src.home"      value="${basedir}/src"/>
   <property name="web.home"      value="${basedir}/web"/>
+  <property environment="env"/>
+  <property name="build.num"     value="${env.BUILD_NUMBER}"/>
 
   <target name="help">
     <echo>You can use the following targets:</echo>
@@ -54,8 +56,21 @@
       <fileset dir="${web.home}"/>
     </copy>
   </target>
+  
+  <target name="replace" depends="prepare"
+          description="Add build number to main page">
+    <copy file="${work.home}/index.tpl"
+          tofile="${work.home}/index.html" >
+      <filterchain>
+         <replacetokens>
+            <token key="BUILD_NUMBER" value="${build.num}"/>
+          </replacetokens>
+      </filterchain>
+    </copy>
+    <delete file="${work.home}/index.tpl"/>
+  </target>
 
-  <target name="compile" depends="prepare"
+  <target name="compile" depends="replace"
           description="Compile Java sources and copy to WEB-INF/classes dir">
     <javac srcdir="${src.home}"
           destdir="${work.home}/WEB-INF/classes">
@@ -65,7 +80,6 @@
       <fileset dir="${src.home}" excludes="**/*.java"/>
     </copy>
   </target>
-
 
   <target name="dist" depends="compile"
           description="Create WAR file for binary distribution">
